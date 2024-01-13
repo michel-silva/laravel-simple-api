@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\Public\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('products')->group(function() {
+Route::prefix('product')->group(function() {
     Route::get('', [ProductsController::class, 'index']);
 });
