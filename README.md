@@ -1,66 +1,91 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## Laaravel Simple API
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This objective of this project is demonstrate some resources of Laravel. The above resources are useds in project:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Pagination](https://laravel.com/docs/10.x/eloquent-resources#pagination)
+- [Authentication with Sanctum cookie based](https://laravel.com/docs/10.x/sanctum#spa-authentication)
+- [Create command to import products](https://laravel.com/docs/10.x/artisan#writing-commands)
+- [Create JOB to process import async](https://laravel.com/docs/10.x/queues)
+- [Use resources to filter response](https://laravel.com/docs/10.x/eloquent-resources#writing-resources)
+- [Use requests to validating form data](https://laravel.com/docs/10.x/validation#form-request-validation)
+- [Use Softdelete](https://laravel.com/docs/10.x/eloquent#soft-deleting)
+- [Handle custom error on NotFoundHttpException](https://laravel.com/docs/10.x/errors#rendering-exceptions)
+- [Doc builded with swagger](https://swagger.io/)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+If you have any suggestion of resource of laravel to I add in this project let me know (silva.michel.b@gmail.com).
 
-## Learning Laravel
+## To run this project
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+It's so easy to run this project. Here you have some steps to test all resources:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1 - Clone the repository
+```
+git clone https://github.com/michel-silva/laravel-simple-api.git && cd laravel-simple-api
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2 - Copy .env.exemple
+```
+cp .env.example .env
+```
 
-## Laravel Sponsors
+3 - Create a new MySQL database (laravel_simple_api) and update mysql connection config
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4 - Run composer install
+```
+composer install
+```
 
-### Premium Partners
+5 - Generate key
+```
+php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+6 - Run migrate
+```
+php artisan migrate
+```
 
-## Contributing
+7 - Run import command, this will import products from [fakestoreapi](https://fakestoreapi.com/products)
+```
+php artisan app:import-products
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+8 - Generate Swagger doc
+```
+php artisan l5-swagger:generate
+```
 
-## Code of Conduct
+9 - Run local server
+```
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+10 - [Access Swagger doc](http://localhost:8000/api/documentation)
 
-## Security Vulnerabilities
+## Overview
+This project have three groups of routes. 
+The first is the auth routes, is use to register, login and logout:
+```
+POST - http://localhost:8000/api/auth/register
+POST - http://localhost:8000/api/auth/login
+POST - http://localhost:8000/api/auth/logout
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+The second is the public routes. This routes is public and can be accessed by anyone:
+```
+GET - http://localhost:8000/api/public/products
 
-## License
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The third is the private routes. This routes is private and only can be accessed by logged users:
+```
+GET - http://localhost:8000/api/private/user
+GET - http://localhost:8000/api/private/products
+GET - http://localhost:8000/api/private/products/{id}
+POST - http://localhost:8000/api/private/products
+PUT - http://localhost:8000/api/private/products/{id}
+DELETE - http://localhost:8000/api/private/products/{id}
+```
