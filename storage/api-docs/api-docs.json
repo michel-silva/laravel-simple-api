@@ -1,0 +1,576 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel simple api",
+        "description": "Description of Test API",
+        "contact": {
+            "email": "silva.michel.b@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User register",
+                "operationId": "d764dd091cc4494ae0baf360b03319f3",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "Person Smith",
+                                    "email": "email@domain",
+                                    "password": 12345678
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User created",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "id": 1,
+                                            "name": "Person Smith",
+                                            "email": "email@dominio",
+                                            "email_verified_at": null,
+                                            "created_at": "2024-01-12T14:22:03.000000Z",
+                                            "updated_at": "2024-01-12T14:22:03.000000Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User login",
+                "operationId": "8dcb70df1020986038d098cc08d05dae",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "email@domain",
+                                    "password": 12345678
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "id": 1,
+                                            "name": "Person Smith",
+                                            "email": "email@dominio",
+                                            "email_verified_at": null,
+                                            "created_at": "2024-01-12T14:22:03.000000Z",
+                                            "updated_at": "2024-01-12T14:22:03.000000Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "message": "Email ou senha inválidos."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User logout",
+                "operationId": "69281b12abb272c76871f19cb17ca563",
+                "responses": {
+                    "200": {
+                        "description": "User unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/private/user": {
+            "get": {
+                "tags": [
+                    "Private"
+                ],
+                "summary": "User logged",
+                "operationId": "16658bb5ed3e8527fa9745ddf70affc3",
+                "responses": {
+                    "200": {
+                        "description": "User logged",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "id": 1,
+                                            "name": "Person Smith",
+                                            "email": "email@dominio",
+                                            "email_verified_at": null,
+                                            "created_at": "2024-01-12T14:22:03.000000Z",
+                                            "updated_at": "2024-01-12T14:22:03.000000Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/private/product": {
+            "get": {
+                "tags": [
+                    "Private"
+                ],
+                "summary": "Get a list of products",
+                "operationId": "9ce9f0c9652f3ae9cd407539e848e645",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Set page of data",
+                        "required": false
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Set per page of data",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Display a list of products.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "Array of products",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "description": "Pagination meta information",
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": "10"
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": "100"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "links": {
+                                            "description": "Pagination links",
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "url/to/first/page"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "url/to/last/page"
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "example": "url/to/prev/page"
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "url/to/next/page"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Private"
+                ],
+                "summary": "Create a product",
+                "operationId": "dea768ada0a6dac2610fea6b0aee7d63",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "category": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "title": "Product",
+                                    "description": "Product Description",
+                                    "category": "category",
+                                    "image": "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg",
+                                    "price": 123
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Create a product.",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "An result object.",
+                                        "value": {
+                                            "id": 1,
+                                            "title": "Product",
+                                            "description": "Product Description",
+                                            "category": "category",
+                                            "image": "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg",
+                                            "price": 123
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/private/product/{id}": {
+            "get": {
+                "tags": [
+                    "Private"
+                ],
+                "summary": "Get a product",
+                "operationId": "43195e8b93005224a5e25825183acdfa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id from product",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Display a product."
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Private"
+                ],
+                "summary": "Update a product",
+                "operationId": "cd5c57bb6d8c53a466507cfb8da4de25",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id from product",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "category": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "title": "Product",
+                                    "description": "Product Description",
+                                    "category": "category",
+                                    "image": "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg",
+                                    "price": 123
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Return a updated a product"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Private"
+                ],
+                "summary": "Soft delete of a product",
+                "operationId": "ce63c2a506e240e46987837755132793",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id from product",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Soft delete of product."
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/public/product": {
+            "get": {
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Get a Public list of products",
+                "operationId": "97856307943c6bc413eb2311d18ac40f",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Set page of data",
+                        "required": false
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Set per page of data",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Display a listing of products.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "Array of products",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "description": "Pagination meta information",
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": "10"
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": "100"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "links": {
+                                            "description": "Pagination links",
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "url/to/first/page"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "url/to/last/page"
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "example": "url/to/prev/page"
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "url/to/next/page"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "Unauthorized": {
+                "description": "User unauthenticated",
+                "content": {
+                    "application/json": {
+                        "schema": {},
+                        "examples": {
+                            "result": {
+                                "summary": "An result object.",
+                                "value": {
+                                    "message": "unauthenticated."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
